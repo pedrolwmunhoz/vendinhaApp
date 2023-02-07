@@ -10,7 +10,7 @@ const Home = () => {
 
   const date = new Date()
 
-  const { setSaleList, saleListValueTotal, setSaleListValueTotal } = UseStateContext()
+  const { setSaleList, setSaleListValueTotal, pedingValue } = UseStateContext()
 
   const [overview, setOverview] = useState(true)
   const [peding, setPeding] = useState(false)
@@ -34,7 +34,7 @@ const Home = () => {
               <h1 className="text-white font-medium text-2xl">{date.getFullYear()}</h1>
             </div>
             <div>
-              <h2 className="text-white font-medium text-3xl">R$ {saleListValueTotal}</h2>
+              <h2 className="text-white font-medium text-3xl">R$ {pedingValue}</h2>
             </div>
         </div>
         <div className="flex flex-col items-center mt-14 gap-10 mb-14">
