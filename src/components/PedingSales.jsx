@@ -27,6 +27,7 @@ const PedingSales = () => {
       })
   },[])
 
+
   const handleName = (id)=>{
     for (let cont = 0; cont < clients.length; cont++) {
         if(clients[cont].id === id){

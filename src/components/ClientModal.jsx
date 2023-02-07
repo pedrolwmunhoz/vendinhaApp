@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { UseStateContext } from '../contexts/ContextProvider'
 import Axios from 'axios'
 
@@ -11,6 +11,7 @@ const ClientModal = () => {
 
 
   const handleAddSale = ()=>{
+
     let name = document.getElementById("name-input").value
     let cpf = document.getElementById("cpf-input").value
     let email = document.getElementById("email-input").value

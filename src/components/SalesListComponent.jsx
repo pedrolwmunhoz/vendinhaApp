@@ -19,6 +19,7 @@ const SalesListComponent = () => {
         setList((old)=>[...old, saleList[pagination+cont]])
     }
     },[pagination, saleList])
+    
     useEffect(()=>{
         setSaleList([])
         setList([])

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { UseStateContext } from '../contexts/ContextProvider'
 import Axios from 'axios'
 
@@ -7,10 +7,47 @@ const SaleModal = () => {
   const { saleModalActive, setSaleModalActive, clientId } = UseStateContext()
 
   const [erro, setErro] = useState(false)
+  const [erroPending, setErroPending] = useState(false)
   const [sucess, setSucess] = useState(false)
 
+  const [saleList, setsaleList] = useState([])
+
+
+    const valideAdd = ()=>{
+
+        let contador = 0
+        for (let cont = 0; cont < saleList.length; cont++) {
+            if(saleList[cont].clientId === clientId){
+                if(!saleList[cont].isPaid){
+                    contador+=1
+                }
+            }
+        }
+        let isPaid
+
+        if(document.getElementById("paid-input").checked){
+        isPaid = true
+        }else isPaid = false
+
+        if(contador === 0 && isPaid){
+            handleAddSale()
+        }else{
+            setErro(false)
+            setSucess(false)
+            setErroPending(true)
+        }
+    }
+
+  useEffect(()=>{
+    Axios.get("https://vendinhaapi.azurewebsites.net/api/saleList")
+    .then((resp)=>{
+        setsaleList(resp.data)
+    })
+ 
+  },[])
 
   const handleAddSale = ()=>{
+
     let value = document.getElementById("value-input").value
     let isPaid
 
@@ -25,16 +62,19 @@ const SaleModal = () => {
         if(resp.status === 200){
             setSucess(true)
             setErro(false)
+            setErroPending(false)
         }
     })
     .catch((resp)=>{
         if(resp.response.status === 200){
             setSucess(true)
             setErro(false)
+            setErroPending(false)
         }
         else {
             setErro(true)
             setSucess(false)
+            setErroPending(false)
         }
     })
   }
@@ -45,6 +85,7 @@ const SaleModal = () => {
             <div className="flex w-full justify-center">
                 <p className={`text-green-400 border-2 ${sucess ? "" : "hidden"}`}>Venda adicionada</p>
                 <p className={`text-red-400 ${erro ? "" : "hidden"}`}>Erro</p>
+                <p className={`text-red-400 ${erroPending ? "" : "hidden"}`}>Erro: Já existe uma divida pendente para este usuário</p>
             </div>
             <div className="flex flex-col gap-5">
                 <div className="flex flex-row gap-4 items-center">
@@ -55,11 +96,16 @@ const SaleModal = () => {
                     <p>Pago:?</p>
                     <input id="paid-input" type="checkbox" />
                 </div>
-                <button onClick={()=>handleAddSale()} className="py-2 px-5 bg-green-400 rounded-xl">Adicionar venda</button>
+                <button onClick={()=>{
+                        valideAdd()
+                        }
+                    }
+                    className="py-2 px-5 bg-green-400 rounded-xl">Adicionar venda</button>
                 <button onClick={()=>{
                     setSaleModalActive(false)
                     setErro(false)
                     setSucess(false)
+                    setErroPending(false)
                     }} className="py-2 px-5 bg-red-400 rounded-xl">Fechar</button>
             </div>
         </div>
