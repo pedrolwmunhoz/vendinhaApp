@@ -19,7 +19,7 @@ const IconList = (props) => {
     },[props.name])
 
   return (
-    <div className={`py-3 rounded-2xl text-center font-medium ${background} ${fontColor}  text-2xl w-1/6`}>{props.name}</div>
+    <div className={`py-3 rounded-2xl text-center font-medium ${background} ${fontColor} text-2xl w-1/4 md:w-1/6`}>{props.name}</div>
   )
 }
 

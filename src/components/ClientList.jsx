@@ -77,7 +77,7 @@ const ClientList = () => {
                 {"<"}
             </button>
             <button onClick={()=>{
-                setPagination((old)=>old+5 <= saleList.length ? old+5 : old )
+                setPagination((old)=>old+5 <= clients.length ? old+5 : old )
             }}
 
             >

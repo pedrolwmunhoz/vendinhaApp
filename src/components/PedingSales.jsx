@@ -4,7 +4,6 @@ import { UseStateContext } from '../contexts/ContextProvider'
 import IconList from './IconList'
 
 const PedingSales = () => {
-
   const { saleList } = UseStateContext()
 
   const [pagination, setPagination] = useState(0)
@@ -15,24 +14,28 @@ const PedingSales = () => {
     setClients([])
     setList([])
     for (let cont = 0; cont < 5; cont++) {
-        if(pagination + cont < saleList.length){
-            if(!saleList[pagination+cont].isPaid){
-                setList((oldArray)=>[...oldArray, saleList[pagination+cont]])
-                if (cont === saleList.length - pagination ) break
-            }
+        if ((cont + pagination) === saleList.length ) break
+        if(!saleList[pagination+cont].isPaid){
+            setList((old)=>[...old, saleList[pagination+cont]])
         }
     }
   },[pagination, saleList])
 
   useEffect(()=>{
-    list?.map((i)=>getClient(i.clientId))
-  },[list])
+      Axios.get(`https://vendinhaapi.azurewebsites.net/api/clients/`)
+      .then((resp)=>{
+          setClients(resp.data)
+      })
+  },[])
 
-  const getClient = (id)=>{
-    Axios.get(`https://vendinhaapi.azurewebsites.net/api/clients/${id}`)
-    .then((resp)=>{
-        setClients((old)=>[...old, resp.data])
-    })
+  const handleName = (id)=>{
+    for (let cont = 0; cont < clients.length; cont++) {
+        if(clients[cont].id === id){
+            if(!list[cont].isPaid){
+                return clients[cont].name
+            }
+        }
+    }
   }
 
   const handleValue = (id)=>{
@@ -58,26 +61,26 @@ const PedingSales = () => {
   return (
     <div className="flex w-full px-5 md:w-1/2 flex-col">
         <div className="flex flex-col gap-3">
-            { clients?.map((client,index)=>{
+            { list?.map((list,index)=>{
                 return(
                     <div className="flex flex-row gap-3 items-center" key={index}>
                         <IconList name= "-$" />
                         <div className="flex flex-col">
                             <div className="flex flex-row gap-2">
                                 <h1 className="text-sm text-bold  text-gray-400">Cliente:</h1>
-                                <p className="text-sm">{client.name}</p>
+                                <p className="text-sm">{handleName(list.clientId)}</p>
                             </div>
                             <div className="flex flex-row gap-2">
                                 <h1 className="text-sm text-bold  text-gray-400">Valor total:</h1>
-                                <p className="text-sm">{handleValue(client.id)}</p>
+                                <p className="text-sm">{handleValue(list.clientId)}</p>
                             </div>
                             <div className="flex flex-row gap-2">
                                 <h1 className="text-sm text-bold  text-gray-400">Data:</h1>
-                                <p className="text-sm">{handleDate(client.id)}</p>
+                                <p className="text-sm">{handleDate(list.clientId)}</p>
                             </div>
                         </div>
                         <div className="w-full flex justify-end">
-                            <p className={"text-red-600 font-bold text-2xl"}>R$ {handleValue(client.id)}</p>
+                            <p className={"text-red-600 font-bold text-2xl"}>R$ {list.value}</p>
                         </div>
                     </div>
                 )

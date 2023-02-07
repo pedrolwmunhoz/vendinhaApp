@@ -18,18 +18,33 @@ const ClientModal = () => {
 
     Axios.post("https://vendinhaapi.azurewebsites.net/api/clients", { name: name, cpf: cpf, email: email, birth_date: birthDate })
     .then((resp)=>{
-        if(resp.status === 200) setSucess(true)
-        else setErro(true)
+        if(resp.status === 200){
+            setSucess(true)
+            setErro(false)
+        }
+    })
+    .catch((resp)=>{
+        if(resp.response.status === 200){
+            setSucess(true)
+            setErro(false)
+        }else{
+            setErro(true)
+            setSucess(false)
+        }
     })
   }
 
   return (
-    <div id="myModal" className={`${clientModalActive ? "" : "hidden" } fixed flex items-center justify-center inset-0 w-full h-full overflow-auto bg-gray-400 bg-opacity-30`}>
-        <div className="bg-white mx-4 p-10 w-9/12 flex justify-center flex-col">
+    <div id="myModal" className={`${clientModalActive ? "" : "hidden" } fixed flex items-center justify-center inset-0 overflow-auto bg-gray-400 bg-opacity-30`}>
+        <div className="bg-white mx-4 p-10 flex justify-center flex-col">
             <div className="flex flex-col gap-5">
+                <div className="flex w-full justify-center">
+                    <p className={`text-green-400 ${sucess ? "" : "hidden"}`}>Cliente adicionado</p>
+                    <p className={`text-red-400 ${erro ? "" : "hidden"}`}>Erro</p>
+                </div>
                 <div className="flex flex-row gap-4 items-center">
                     <p>Nome:</p>
-                    <input id='name-input' type="text" className="p-1 border-gray-300 border-2 rounded-xl border-solid" />
+                    <input id='name-input' type="text" className="p-1 border-gray-300 border-2 rounded-xl border-solid w-1/2" />
                 </div>
                 <div className="flex flex-row gap-4">
                     <p>Cpf:</p>
@@ -43,8 +58,6 @@ const ClientModal = () => {
                     <p>Data Nascimento:</p>
                     <input id="birthDate-input" type= "date"  className="p-1 border-gray-300 border-2 rounded-xl border-solid"/>
                 </div>
-                <p className={`bg-red-400 text-red-800 border-2 border-gray-400 border-solid ${erro ? "" : "hidden"}`}>Erro</p>
-                <p className={`bg-green-400 text-green-800 border-2 border-gray-400 border-solid  ${sucess ? "" : "hidden"}`}>Cliente adicionado</p>
                 <button onClick={()=>{
                     handleAddSale()
                     }} className="py-2 px-5 bg-green-400 rounded-xl">Adicionar Cliente</button>

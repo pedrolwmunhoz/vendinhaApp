@@ -22,14 +22,30 @@ const SaleModal = () => {
 
     Axios.post("https://vendinhaapi.azurewebsites.net/api/saleList", { clientId: clientId, value: value, isPaid: isPaid, creationDate: date })
     .then((resp)=> {
-      if(resp.status === 200) setSucess(true)
-      else setErro(true)
+        if(resp.status === 200){
+            setSucess(true)
+            setErro(false)
+        }
+    })
+    .catch((resp)=>{
+        if(resp.response.status === 200){
+            setSucess(true)
+            setErro(false)
+        }
+        else {
+            setErro(true)
+            setSucess(false)
+        }
     })
   }
 
   return (
-    <div id="myModal" className={`${saleModalActive ? "" : "hidden" } fixed flex items-center justify-center inset-0 w-full h-full overflow-auto bg-gray-400 bg-opacity-30`}>
-        <div className="bg-white mx-4 p-10 w-9/12 flex justify-center flex-col">
+    <div id="myModal" className={`${saleModalActive ? "" : "hidden" } fixed flex items-center justify-center inset-0 overflow-auto bg-gray-400 bg-opacity-30`}>
+        <div className="bg-white mx-4 p-10 flex justify-center flex-col">
+            <div className="flex w-full justify-center">
+                <p className={`text-green-400 border-2 ${sucess ? "" : "hidden"}`}>Venda adicionada</p>
+                <p className={`text-red-400 ${erro ? "" : "hidden"}`}>Erro</p>
+            </div>
             <div className="flex flex-col gap-5">
                 <div className="flex flex-row gap-4 items-center">
                     <p>Valor:</p>
@@ -39,8 +55,6 @@ const SaleModal = () => {
                     <p>Pago:?</p>
                     <input id="paid-input" type="checkbox" />
                 </div>
-                <p className={`text-red-800 bg-red-400 border-2 border-gray-400 border-solid ${erro ? "" : "hidden"}`}>Erro</p>
-                <p className={`text-green-800 bg-green-400 border-2 border-gray-400 border-solid  ${sucess ? "" : "hidden"}`}>Venda adicionada</p>
                 <button onClick={()=>handleAddSale()} className="py-2 px-5 bg-green-400 rounded-xl">Adicionar venda</button>
                 <button onClick={()=>{
                     setSaleModalActive(false)

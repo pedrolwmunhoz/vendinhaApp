@@ -15,6 +15,7 @@ export const ContextProvider = ({children}) =>{
     const [saleModalActive, setSaleModalActive] = useState(false)
     const [clientModalActive, setClientModalActive] = useState(false)
     const [clientId, setClientId] = useState(0)
+    const [clientsList, setClientsList] = useState([])
 
 
     return (
@@ -37,7 +38,9 @@ export const ContextProvider = ({children}) =>{
                 clientModalActive,
                 setClientModalActive,
                 clientId,
-                setClientId
+                setClientId,
+                clientsList,
+                setClientsList
             }}
         >
                 {children}
