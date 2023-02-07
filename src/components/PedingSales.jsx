@@ -11,7 +11,6 @@ const PedingSales = () => {
   const [clients, setClients] = useState([])
 
   useEffect(()=>{
-    setClients([])
     setList([])
     for (let cont = 0; cont < 5; cont++) {
         if ((cont + pagination) === saleList.length ) break
@@ -31,9 +30,7 @@ const PedingSales = () => {
   const handleName = (id)=>{
     for (let cont = 0; cont < clients.length; cont++) {
         if(clients[cont].id === id){
-            if(!list[cont].isPaid){
-                return clients[cont].name
-            }
+            return clients[cont].name
         }
     }
   }
@@ -86,7 +83,7 @@ const PedingSales = () => {
                 )
             })}
         </div>
-        <div className="flex flex-row gap-5 w-full justify-center">
+        <div className="flex flex-row gap-5 w-full justify-center mb-14">
             <button onClick={()=>{
                     pagination === 0 ? setPagination(0) : setPagination((old)=>old-5)
                 }}

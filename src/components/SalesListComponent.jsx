@@ -19,7 +19,6 @@ const SalesListComponent = () => {
         setList((old)=>[...old, saleList[pagination+cont]])
     }
     },[pagination, saleList])
-    
     useEffect(()=>{
         setSaleList([])
         setList([])
@@ -79,7 +78,7 @@ const SalesListComponent = () => {
                 )
             })}
         </div>
-        <div className="flex flex-row gap-5 w-full justify-center">
+        <div className="flex flex-row gap-5 w-full justify-center mb-14">
             <button onClick={()=>{
                     pagination === 0 ? setPagination(0) : setPagination((old)=>old-5)
                 }}
@@ -87,7 +86,7 @@ const SalesListComponent = () => {
                 {"<"}
             </button>
             <button onClick={()=>{
-                setPagination((old)=>old+5 <= clients.length ? old+5 : old )
+                setPagination((old)=>old+5 <= saleList.length ? old+5 : old )
             }}
 
             >

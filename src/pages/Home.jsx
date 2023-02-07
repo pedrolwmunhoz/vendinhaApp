@@ -37,7 +37,7 @@ const Home = () => {
               <h2 className="text-white font-medium text-3xl">R$ {saleListValueTotal}</h2>
             </div>
         </div>
-        <div className="flex flex-col items-center mt-14 gap-10">
+        <div className="flex flex-col items-center mt-14 gap-10 mb-14">
           <div className='bg-gray-300 rounded-xl flex flex-row justify-center'>
             <div onClick={()=>{
                 setPeding(false)

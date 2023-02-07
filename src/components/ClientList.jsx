@@ -25,8 +25,8 @@ const ClientList = () => {
     setList([])
     for (let cont = 0; cont < 5; cont++) {
         if(pagination + cont < clients.length){
-                setList((oldArray)=>[...oldArray, clients[pagination+cont]])
-                if (cont === clients.length - pagination ) break
+            setList((oldArray)=>[...oldArray, clients[pagination+cont]])
+            if (cont === clients.length - pagination ) break
         }
     }
   },[pagination, saleList, clients])
@@ -69,7 +69,7 @@ const ClientList = () => {
             <SaleModal />
             <ClientModal />
         </div>
-        <div className="flex flex-row gap-5 w-full justify-center">
+        <div className="flex flex-row gap-5 w-full justify-center mb-14">
             <button onClick={()=>{
                     pagination === 0 ? setPagination(0) : setPagination((old)=>old-5)
                 }}
