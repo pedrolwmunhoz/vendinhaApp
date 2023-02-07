@@ -85,7 +85,7 @@ const SaleModal = () => {
             <div className="flex w-full justify-center">
                 <p className={`text-green-400 border-2 ${sucess ? "" : "hidden"}`}>Venda adicionada</p>
                 <p className={`text-red-400 ${erro ? "" : "hidden"}`}>Erro</p>
-                <p className={`text-red-400 ${erroPending ? "" : "hidden"}`}>Erro: Já existe uma divida pendente para este usuário</p>
+                <p className={`text-red-400 mb-4 ${erroPending ? "" : "hidden"}`}>Erro: Já existe uma divida pendente para este usuário</p>
             </div>
             <div className="flex flex-col gap-5">
                 <div className="flex flex-row gap-4 items-center">

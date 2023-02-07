@@ -49,8 +49,8 @@ const ClientList = () => {
                                 <p className="text-xs md:text-sm">{client.email}</p>
                             </div>
                             <div className="flex flex-row gap-2">
-                                <h1 className="text-xs md:text-sm text-bold  text-gray-400">Data Nascimento:</h1>
-                                <p className="text-xs md:text-sm">{client.birth_date}</p>
+                                <h1 className="text-xs md:text-sm text-bold  text-gray-400">Cpf:</h1>
+                                <p className="text-xs md:text-sm">{client.cpf}</p>
                             </div>
                         </div>
                         <div className="w-full flex justify-end">
