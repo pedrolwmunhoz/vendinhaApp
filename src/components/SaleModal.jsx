@@ -11,31 +11,37 @@ const SaleModal = () => {
   const [sucess, setSucess] = useState(false)
 
   const [saleList, setsaleList] = useState([])
+  const [getList, setGetList] = useState(0)
 
 
     const valideAdd = ()=>{
-
-        let contador = 0
-        for (let cont = 0; cont < saleList.length; cont++) {
-            if(saleList[cont].clientId === clientId){
-                if(!saleList[cont].isPaid){
-                    contador+=1
+        setErroPending(false)
+        setSucess(false)
+        setErro(false)
+        if(getList === 1){
+            setGetList(0)
+            setErroPending(true)
+        }else{
+            setGetList((old)=>old+1)
+            let contador = 0
+            for (let cont = 0; cont < saleList.length; cont++) {
+                if(saleList[cont].clientId === clientId){
+                    if(!saleList[cont].isPaid){
+                        contador+=1
+                    }
+                    console.log(contador)
                 }
             }
+    
+            if(contador === 0){
+                handleAddSale()
+            }else{
+                setErro(false)
+                setSucess(false)
+                setErroPending(true)
+            }
         }
-        let isPaid
 
-        if(document.getElementById("paid-input").checked){
-        isPaid = true
-        }else isPaid = false
-
-        if(contador === 0 && isPaid){
-            handleAddSale()
-        }else{
-            setErro(false)
-            setSucess(false)
-            setErroPending(true)
-        }
     }
 
   useEffect(()=>{
@@ -44,7 +50,7 @@ const SaleModal = () => {
         setsaleList(resp.data)
     })
  
-  },[])
+  },[getList])
 
   const handleAddSale = ()=>{
 
@@ -96,10 +102,7 @@ const SaleModal = () => {
                     <p>Pago:?</p>
                     <input id="paid-input" type="checkbox" />
                 </div>
-                <button onClick={()=>{
-                        valideAdd()
-                        }
-                    }
+                <button onClick={()=> valideAdd()}
                     className="py-2 px-5 bg-green-400 rounded-xl">Adicionar venda</button>
                 <button onClick={()=>{
                     setSaleModalActive(false)
