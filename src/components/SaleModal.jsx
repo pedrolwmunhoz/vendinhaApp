@@ -15,30 +15,35 @@ const SaleModal = () => {
 
 
     const valideAdd = ()=>{
-        setErroPending(false)
-        setSucess(false)
-        setErro(false)
-        if(getList === 1){
-            setGetList(0)
-            setErroPending(true)
+
+        if( document.getElementById("paid-input").checked ) {
+            handleAddSale()
         }else{
-            setGetList((old)=>old+1)
-            let contador = 0
-            for (let cont = 0; cont < saleList.length; cont++) {
-                if(saleList[cont].clientId === clientId){
-                    if(!saleList[cont].isPaid){
-                        contador+=1
-                    }
-                    console.log(contador)
-                }
-            }
-    
-            if(contador === 0){
-                handleAddSale()
-            }else{
-                setErro(false)
-                setSucess(false)
+            setErroPending(false)
+            setSucess(false)
+            setErro(false)
+            if(getList === 1){
+                setGetList(0)
                 setErroPending(true)
+            }else{
+                setGetList((old)=>old+1)
+                let contador = 0
+                for (let cont = 0; cont < saleList.length; cont++) {
+                    if(saleList[cont].clientId === clientId){
+                        if(!saleList[cont].isPaid){
+                            contador+=1
+                        }
+                        console.log(contador)
+                    }
+                }
+        
+                if(contador === 0){
+                    handleAddSale()
+                }else{
+                    setErro(false)
+                    setSucess(false)
+                    setErroPending(true)
+                }
             }
         }
 

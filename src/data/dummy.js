@@ -1,8 +1,6 @@
 import { IoHome } from "react-icons/io5"
 import { FaUsers } from "react-icons/fa"
 import { GiPriceTag } from "react-icons/gi"
-import { useEffect, useState } from "react"
-import { UseStateContext } from "../contexts/ContextProvider"
 
 export const links = [
         {

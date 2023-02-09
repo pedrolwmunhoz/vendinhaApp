@@ -1,4 +1,4 @@
-import React , { createContent, createContext, useContext, useState } from 'react'
+import React , { createContext, useContext, useState } from 'react'
 
 const StateContext = createContext();
 
@@ -14,6 +14,7 @@ export const ContextProvider = ({children}) =>{
     const [paidSales, setPaidSales] = useState(0)
     const [saleModalActive, setSaleModalActive] = useState(false)
     const [clientModalActive, setClientModalActive] = useState(false)
+    const [confirmModalActive, setConfirmModalActive] = useState(false)
     const [clientId, setClientId] = useState(0)
     const [clientsList, setClientsList] = useState([])
 
@@ -40,7 +41,9 @@ export const ContextProvider = ({children}) =>{
                 clientId,
                 setClientId,
                 clientsList,
-                setClientsList
+                setClientsList,
+                confirmModalActive,
+                setConfirmModalActive
             }}
         >
                 {children}

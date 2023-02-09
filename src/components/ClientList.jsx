@@ -4,10 +4,14 @@ import { UseStateContext } from '../contexts/ContextProvider'
 import ClientModal from './ClientModal'
 import IconList from './IconList'
 import SaleModal from './SaleModal'
+import { BsTrash } from 'react-icons/bs'
+import ConfirmModal from './ConfirmModal'
 
 const ClientList = () => {
 
-  const { saleList, setSaleModalActive, setClientId } = UseStateContext()
+  const { saleList, setSaleModalActive, setClientId, setConfirmModalActive, confirmModalActive } = UseStateContext()
+
+  useEffect(()=>{console.log(confirmModalActive)},[confirmModalActive])
 
   const [pagination, setPagination] = useState(0)
   const [list, setList] = useState([])
@@ -53,7 +57,7 @@ const ClientList = () => {
                                 <p className="text-xs md:text-sm">{client.cpf}</p>
                             </div>
                         </div>
-                        <div className="w-full flex justify-end">
+                        <div className="w-full flex justify-end items-center gap-2">
                             <button onClick={()=>{
                                 setSaleModalActive(true)
                                 setClientId(client.id)
@@ -62,12 +66,18 @@ const ClientList = () => {
                             >
                                 Add Venda
                             </button>
+                            <BsTrash onClick={()=>{
+                                    setConfirmModalActive(true)
+                                    setClientId(client.id)
+                                }}
+                                size={'30px'} color='red'/>
                         </div>
                     </div>
                 )
             })}
             <SaleModal />
             <ClientModal />
+            <ConfirmModal />
         </div>
         <div className="flex flex-row gap-5 w-full justify-center mb-14">
             <button onClick={()=>{
